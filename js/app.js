@@ -123,6 +123,7 @@ $(document).ready(function() {
 								// Channel exists, so we mark it as "existent" and use some of its data
 								//console.log("channel: " + current + "exists!", response);
 								self.twitchs[current] = {};
+								self.twitchs[current].inputName = current;
 								self.twitchs[current].existence = "existent";
 								self.twitchs[current].logo = response.logo;
 								self.twitchs[current].url = response.url;
@@ -132,6 +133,7 @@ $(document).ready(function() {
 								// Channel does not exist, so we mark it as "nonExistent"
 								//console.log("channel:" + current + " does not exist!", response);
 								self.twitchs[current] = {};
+								self.twitchs[current].inputName = current;
 								self.twitchs[current].existence = "nonExistent";
 							})
 							// Always is used like explained above for $.when() to work properly
@@ -266,7 +268,7 @@ $(document).ready(function() {
 			.then(myTwitch.M.refreshStreams)
 			// 2.done(3. renderView)
 			.then(function(response) {
-				myTwitch.V.render(response);
+				myTwitch.V.init(response);
 			});
 			
 		}
@@ -282,8 +284,93 @@ $(document).ready(function() {
 	
 	myTwitch.V = {
 		
-		render: function(input) {
-			console.log(input);
+		/**************************************************
+			init function
+			-------------------------------------------------
+			- Calls displayChannel function for each
+				channel
+		**************************************************/		
+		
+		init: function(input) {
+			for (channel in input) {
+				this.displayChannel(input[channel]);
+			}
+		},
+
+		
+		/**************************************************
+			displayChannel function
+			-------------------------------------------------
+			- Uses template to create list-group-item for
+				the channel entered
+			- Differentiates between non-existent, online
+				and offline channels
+		**************************************************/		
+		
+		displayChannel: function(channel) {
+
+			// template Variables
+			var channelId = channel.inputName;
+			var statusClassStyle;
+			var statusClassFilter;
+			var linkUrl;
+			var linkDisabled; // maybe get rid of it
+			var logoSrc;
+			var channelName;
+			var currentStatus;
+			var currentStatusPadding  = "";
+			
+			if (channel.existence === "nonExistent") {
+				// template values for non-existent channel
+				statusClassStyle = "list-group-item-warning";
+				statusClassFilter = channel.existence;
+				linkUrl = "";
+				linkDisabled = "";
+				channelName = channel.inputName;
+				currentStatus = "No such channel";
+				logoSrc = "img/TwitchGlitchIcon_PurpleonWhite.png";
+			}
+			
+			else {
+				// template values shared by all existing channels
+				linkUrl = "href='" + channel.url + "' ";
+				linkDisabled = "";
+				channelName = channel.displayName;
+				statusClassFilter = channel.status;
+				if (channel.logo) {
+					logoSrc = channel.logo;
+				}
+				else {
+					logoSrc = "img/TwitchGlitchIcon_WhiteonPurple.png";
+				}
+				if (channel.status === "online") {
+					// template values for online channels only
+					statusClassStyle = "list-group-item-success";
+					currentStatus = channel.description;
+					console.log(currentStatus.length);
+					console.log(currentStatus.length);
+					if (currentStatus.length > 70) {
+						currentStatusPadding = "twitch-currentstatus-more-rows";
+					}
+				}
+				else {
+					// template values for offline channels only
+					statusClassStyle = "list-group-item-info";
+					currentStatus = "Channel is currently offline";
+				}
+			}
+			
+			var template =
+					"<a id='" + channelId + "' " + linkUrl + "class='list-group-item " + linkDisabled + statusClassStyle + " " + statusClassFilter + "'>" +
+					"  <div class='row'>" +
+					"	   <span class='col col-xs-12 col-sm-2 twitch-logo'><img src='" + logoSrc + "' /></span>" +
+					"    <span class='col col-xs-12 col-sm-3 twitch-channelname'>" + channelName + "</span>" +
+					"    <span class='col col-xs-12 col-sm-7 " + currentStatusPadding + " twitch-currentstatus'>" + currentStatus + "</span>" +
+					"  </div>" +
+					"</a>";
+			
+			$("#twitch-channels").append(template);
+
 		}
 		
 	} // end myTwitch.V
