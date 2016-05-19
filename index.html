@@ -26,6 +26,47 @@
 
 	<div class="container">
 		<div id="twitch-channels" class="list-group">
+
+			<div id="header" class="list-group-item">
+				<div class="row" >
+					<h4 class="col col-xs-12 col-sm-6 list-group-item-heading">Monitor twitch Streams</h4>
+					<div id="dropdown" class="col col-xs-12 col-sm-6 text-right">
+						<div class="btn-group">
+							<button class="btn btn-default btn-lg dropdown-toggle dropdown-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="dropdown-current">All Channels</span> <span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li class="filter-all"><a href="#">All Channels</a></li>
+								<li role="separator" class="divider"></li>
+								<li class="filter-online"><a href="#">Online</a></li>
+								<li class="filter-offline"><a href="#">Offline</a></li>
+								<li role="separator" class="divider"></li>
+								<li class="filter-non-existent"><a href="#">Not existing</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+			<div id="display-channels"></div>
+
+			<div id="footer" class="list-group-item">
+				<div class="row" >
+					<div id="dropup" class="col col-xs-12 col-sm-6 col-sm-push-6 text-right">
+						<div class="btn-group dropup">
+							<button class="btn btn-default btn-lg dropdown-toggle dropdown-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="dropdown-current">All Channels</span> <span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li class="filter-all"><a href="#">All Channels</a></li>
+								<li role="separator" class="divider"></li>
+								<li class="filter-online"><a href="#">Online</a></li>
+								<li class="filter-offline"><a href="#">Offline</a></li>
+								<li role="separator" class="divider"></li>
+								<li class="filter-non-existent"><a href="#">Not existing</a></li>
+							</ul>
+						</div>
+					</div>
+					<h4 class="col col-xs-12 col-sm-6 col-sm-pull-6 list-group-item-heading">Monitor twitch Streams</h4>
+				</div>
+			</div>
 			
 		</div><!-- /twitch-channels -->
 
@@ -33,6 +74,7 @@
 
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+<script src="js/bootstrap-custom-dropdown.min.js"></script>
 <script src="js/app.js"></script>
 	
 </body>

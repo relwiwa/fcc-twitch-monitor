@@ -1,5 +1,38 @@
 /* Mobile first-styles */
 
+.container {
+	margin-top:20px;
+}
+
+/* Header Area with Title and Dropdown */
+
+#twitch-channels h4 {
+	font-size:24px;
+	padding-top:10px;
+	text-align:center;
+}
+
+/* Dropdown, Dropup */
+
+#dropdown, #dropup {
+	text-align:center;
+}
+
+#footer {
+	display:none;
+}
+
+.dropdown-menu {
+	width:165px;
+}
+
+.dropdown-button {
+	text-align:center;
+	width:165px;
+}
+
+/* Styles for each channel entry */
+
 #twitch-channels img {
 	width:70px;
 	height:70px;
@@ -29,6 +62,38 @@
 	font-weight:bold;
 }
 
+/* Fix rounded corners of first and last Channel list-group-item */
+
+#display-channels .list-group-item:first-child {
+	border-top-left-radius:0px;
+	border-top-right-radius:0px;
+}
+
+#display-channels .list-group-item:last-child {
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+	border-bottom:none;
+}
+
+/* Filter display of channels depending on their status/class of  */
+
+.online 				.online		 		{ display:block; }
+.online 				.offline	 		{ display:none; }
+.online 				.non-existent	{ display:none; }
+
+.offline 				.online		 		{ display:none; }
+.offline 				.offline	 		{ display:block; }
+.offline 				.non-existent	{ display:none; }
+
+.non-existent		.online		 		{ display:none; }
+.non-existent		.offline	 		{ display:none; }
+.non-existent		.non-existent	{ display:block; }
+
+.all						.online		 		{ display:block; }
+.all						.offline	 		{ display:block; }
+.all						.non-existent	{ display:block; }
+
+
 /* Styles for displays >= 768px, that is Bootstrap's col-sm */
 
 @media(min-width:768px){
@@ -51,4 +116,7 @@
 		padding-top:15px;
 	}
 	
+	#dropdown, #dropup {
+		text-align:right;
+	}
 }

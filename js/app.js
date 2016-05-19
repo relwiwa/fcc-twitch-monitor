@@ -294,6 +294,7 @@ $(document).ready(function() {
 		init: function(input) {
 			for (channel in input) {
 				this.displayChannel(input[channel]);
+				this.setupDropdowns();
 			}
 		},
 
@@ -323,7 +324,7 @@ $(document).ready(function() {
 			if (channel.existence === "nonExistent") {
 				// template values for non-existent channel
 				statusClassStyle = "list-group-item-warning";
-				statusClassFilter = channel.existence;
+				statusClassFilter = "non-existent";
 				linkUrl = "";
 				linkDisabled = "";
 				channelName = channel.inputName;
@@ -369,9 +370,38 @@ $(document).ready(function() {
 					"  </div>" +
 					"</a>";
 			
-			$("#twitch-channels").append(template);
+			$("#display-channels").append(template);
 
+		},
+		
+		/**************************************************
+			setupDropdowns function
+			-------------------------------------------------
+			- Setup dropdowns
+			- Add event listener to filter channel entries
+			- Show footer
+		**************************************************/		
+		
+		setupDropdowns: function() {
+			$(".filter-online").click(function() {
+				$("#display-channels").removeClass().addClass("online");
+				$(".dropdown-current").text("Online");
+			});
+			$(".filter-offline").click(function() {
+				$("#display-channels").removeClass().addClass("offline");
+				$(".dropdown-current").text("Offline");
+			});
+			$(".filter-non-existent").click(function() {
+				$("#display-channels").removeClass().addClass("non-existent");
+				$(".dropdown-current").text("Not Existing");
+			});
+			$(".filter-all").click(function() {
+				$("#display-channels").removeClass().addClass("all");
+				$(".dropdown-current").text("All Channels");
+			});
+			$("#footer").show();
 		}
+		
 		
 	} // end myTwitch.V
 
