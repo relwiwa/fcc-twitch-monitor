@@ -329,7 +329,7 @@ $(document).ready(function() {
 				linkDisabled = "";
 				channelName = channel.inputName;
 				currentStatus = "No such channel";
-				logoSrc = "img/TwitchGlitchIcon_PurpleonWhite.png";
+				logoSrc = "http://res.cloudinary.com/dqzrtsqol/image/upload/v1464091895/TwitchGlitchIcon_WhiteonPurple_bt6alc.png";
 			}
 			
 			else {
@@ -342,7 +342,7 @@ $(document).ready(function() {
 					logoSrc = channel.logo;
 				}
 				else {
-					logoSrc = "img/TwitchGlitchIcon_WhiteonPurple.png";
+					logoSrc = "http://res.cloudinary.com/dqzrtsqol/image/upload/v1464091895/TwitchGlitchIcon_PurpleonWhite_tayh1q.png";
 				}
 				if (channel.status === "online") {
 					// template values for online channels only
