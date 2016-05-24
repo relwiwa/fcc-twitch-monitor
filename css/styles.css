@@ -75,6 +75,13 @@
 	border-bottom:none;
 }
 
+/* credits */
+
+#credits {
+	margin-top:60px;
+	margin-bottom:15px;
+}
+
 /* Filter display of channels depending on their status/class of  */
 
 .online 				.online		 		{ display:block; }
