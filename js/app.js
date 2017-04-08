@@ -49,6 +49,14 @@ $(document).ready(function() {
 				Used to check the status of a channel, and if
 				it is currently streaming, use the information
 				about the current stream
+		=>	twitch.tv API nowadays requires API key, so
+				freeCodeCamp provides API passthrough to
+				get access to twitch API data without
+				an API key.
+				* API passhthrough endpoint:
+					https://wind-bow.gomix.me/twitch-api
+				* Documentation:
+					https://wind-bow.glitch.me/
 	****************************************************/
 
 	myTwitch.M = {
@@ -118,23 +126,25 @@ $(document).ready(function() {
 
 						// IIFE necessary to keep reference to current channel and "this"
 						(function(current, self) {
-							$.get("https://api.twitch.tv/kraken/channels/" + current)
+							$.getJSON("https://wind-bow.gomix.me/twitch-api/channels/" + current + "?callback=?")
 							.done(function(response) {
-								// Channel exists, so we mark it as "existent" and use some of its data
-								//console.log("channel: " + current + "exists!", response);
-								self.twitchs[current] = {};
-								self.twitchs[current].inputName = current;
-								self.twitchs[current].existence = "existent";
-								self.twitchs[current].logo = response.logo;
-								self.twitchs[current].url = response.url;
-								self.twitchs[current].displayName = response.display_name;
-							})
-							.fail(function(response) {
-								// Channel does not exist, so we mark it as "nonExistent"
-								//console.log("channel:" + current + " does not exist!", response);
-								self.twitchs[current] = {};
-								self.twitchs[current].inputName = current;
-								self.twitchs[current].existence = "nonExistent";
+								if (!response.error) {
+									// Channel exists, so we mark it as "existent" and use some of its data
+									//console.log("channel: " + current + "exists!", response);
+									self.twitchs[current] = {};
+									self.twitchs[current].inputName = current;
+									self.twitchs[current].existence = "existent";
+									self.twitchs[current].logo = response.logo;
+									self.twitchs[current].url = response.url;
+									self.twitchs[current].displayName = response.display_name;
+								}
+								else {
+									// Channel does not exist, so we mark it as "nonExistent"
+									//console.log("channel:" + current + " does not exist!", response);
+									self.twitchs[current] = {};
+									self.twitchs[current].inputName = current;
+									self.twitchs[current].existence = "nonExistent";
+								}
 							})
 							// Always is used like explained above for $.when() to work properly
 							.always(dd.resolve);
@@ -201,7 +211,7 @@ $(document).ready(function() {
 							//console.log("channel exists");
 							var dd = $.Deferred();
 							(function(current, self) {
-								$.get("https://api.twitch.tv/kraken/streams/" + current)
+								$.getJSON("https://wind-bow.gomix.me/twitch-api/streams/" + current + "?callback=?")
 								.done(function(response) {
 									if (response.stream !== null) {
 										//console.log(current + " is online!", response);
@@ -348,8 +358,8 @@ $(document).ready(function() {
 					// template values for online channels only
 					statusClassStyle = "list-group-item-success";
 					currentStatus = channel.description;
-					console.log(currentStatus.length);
-					console.log(currentStatus.length);
+					//console.log(currentStatus.length);
+					//console.log(currentStatus.length);
 					if (currentStatus.length > 70) {
 						currentStatusPadding = "twitch-currentstatus-more-rows";
 					}
